@@ -3,9 +3,9 @@
 /*
     Plugin Name: Ahmeti Wp Güzel Sözler
     Plugin URI: http://ahmeti.net/
-    Description: Güzel sözler ekleyip düzenleyebileceğiniz WP eklentisi.
+    Description: Harika sözleri arşivleyip ve istediğiniz sayfalarda paylaşabilirsiniz...
     Author: Ahmet İmamoğlu
-    Version: 1.0
+    Version: 1.2
     Author URI: http://ahmeti.net/
 */
 
@@ -109,7 +109,7 @@ add_action('admin_menu', 'yonetime_ekle');
 
 function yonetime_ekle() {
     define('PHP_D_ADI', 'ahmeti_soz');
-    define('PHP_D_URL', admin_url().'options-general.php?page=ahmeti_soz/ahmeti_soz.php');
+    define('PHP_D_URL', admin_url().'options-general.php?page=ahmeti-wp-guzel-sozler/ahmeti_soz.php');
     
     //add_action('wp_head', 'ahmeti_head');
     
@@ -125,15 +125,15 @@ function yonetime_ekle() {
 
 function ahmeti_admin_head (){
     /* Admin Eklenti Sayfası Style CSS */
-    echo '<link rel="stylesheet" href="'.plugins_url().'/ahmeti_soz/style.css" type="text/css" media="all" />';
+    echo '<link rel="stylesheet" href="'.plugins_url().'/ahmeti-wp-guzel-sozler/style.css" type="text/css" media="all" />';
     echo '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>';
-    echo '<script type="text/javascript" src="'.plugins_url().'/ahmeti_soz/kontrol.js"></script>';
+    echo '<script type="text/javascript" src="'.plugins_url().'/ahmeti-wp-guzel-sozler/kontrol.js"></script>';
 }
 
 
 function ahmeti_wp_head (){
     /* Gösterim Eklenti Sayfası Style CSS */
-    echo '<link rel="stylesheet" href="'.plugins_url().'/ahmeti_soz/style.css" type="text/css" media="all" />';
+    echo '<link rel="stylesheet" href="'.plugins_url().'/ahmeti-wp-guzel-sozler/style.css" type="text/css" media="all" />';
 }
 
 

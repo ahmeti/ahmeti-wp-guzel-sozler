@@ -1,6 +1,6 @@
 <?php
 echo '<br/><br/>';
-echo '<pre>Sözü nerede göstermek istiyorsanız. <span style="background-color:#eee;">&lt;?php ahmeti_wp_guzel_sozler(); ?&gt;</span> eklemeniz yeterlidir.</pre>';
+echo '<pre>Sözü nerede göstermek istiyorsanız. <span style="background-color:#eee;">&lt;?php echo ahmeti_wp_guzel_sozler(); ?&gt;</span> eklemeniz yeterlidir.</pre>';
 
 ?>
 <div style="display: block;padding: 10px 0 10px 0">
@@ -24,7 +24,7 @@ echo '<pre>Sözü nerede göstermek istiyorsanız. <span style="background-color
             <option value="100"<?php if( AHMETI_SOZ_LIMIT=="100" ){ echo 'selected="selected"';} ?>>100</option>
         </select>
         <br/><br/>
-        <a style="margin-right:15px;" class="button" href="<?php echo admin_url(); ?>plugin-editor.php?file=ahmeti_soz%2Fstyle.css&plugin=ahmeti_soz%2Fstyle.css">CSS Sitili Düzenle</a>
+        <a style="margin-right:15px;" class="button" href="<?php echo admin_url(); ?>plugin-editor.php?file=ahmeti-wp-guzel-sozler%2Fstyle.css&plugin=ahmeti-wp-guzel-sozler%2Fstyle.css">CSS Sitili Düzenle</a>
         <input type="submit" value="Ayarları Güncelle" class="button" />
         <input type="hidden" name="islem" value="ayar_kaydet" />
     </form>

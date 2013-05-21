@@ -2,8 +2,8 @@
 Contributors: ahmeti
 Donate link: http://ahmeti.net/
 Tags: harika sözler, güzel söler, söz arşivi
-Requires at least: 3.5.1
-Tested up to: 2.0
+Requires at least: 2.0
+Tested up to: 3.5.1
 Stable tag: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -25,7 +25,10 @@ Harika sözleri arşivleyip ve istediğiniz sayfalarda paylaşabilirsiniz...
 
 = 1.0 =
 * İlk versiyon.
-
+= 1.1 =
+* Ekran görüntüsü eklendi.
+= 1.2 =
+* Listeleme hatası düzeltildi.
 
 == Frequently Asked Questions ==
 
@@ -36,5 +39,4 @@ Sıkça sorulan soru bulunmamaktadır.
 İlk versiyon.
 
 == Screenshots ==
-
-/assets/Screenshot-ahmeti-wp-guzel-sozler-1.jpg
+1. Ekran Görüntüsü

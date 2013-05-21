@@ -19,9 +19,9 @@ $toplam_sayfa=$soz_listesi_row['COUNT(soz_id)'];
 $baslangic=($baslangic-1)*$page_limit;
 $siralama=AHMETI_SIRALAMA;
 $soz_listesi=mysql_query("SELECT * FROM soz_view ORDER BY soz_id $siralama LIMIT $baslangic,$page_limit");
-$say=mysql_num_rows($soz_listesi);
+$say=mysql_fetch_assoc(mysql_query("SELECT COUNT(soz_id) FROM soz_view ORDER BY soz_id $siralama LIMIT $baslangic,$page_limit"));
 
-if($say > 0){
+if($say['COUNT(soz_id)'] > 0){
     ?>
     <br/><br/>
     <table style="width: 700px">
@@ -41,8 +41,8 @@ if($say > 0){
             <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz->soz; ?></td>
             <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz->aciklama; ?></td>
             <td style="padding: 5px;border: 1px solid #ddd;">
-                <a href="<?php echo PHP_D_URL; ?>&islem=guncelle&id=<?php echo $soz->soz_id; ?>"><img src="<?php echo plugins_url().'/ahmeti_soz/add.png'; ?>" /></a>
-                <a href="<?php echo PHP_D_URL; ?>&islem=sil&id=<?php echo $soz->soz_id; ?>"><img src="<?php echo plugins_url().'/ahmeti_soz/cancel.png'; ?>" /></a>
+                <a href="<?php echo PHP_D_URL; ?>&islem=guncelle&id=<?php echo $soz->soz_id; ?>"><img src="<?php echo plugins_url().'/ahmeti-wp-guzel-sozler/add.png'; ?>" /></a>
+                <a href="<?php echo PHP_D_URL; ?>&islem=sil&id=<?php echo $soz->soz_id; ?>"><img src="<?php echo plugins_url().'/ahmeti-wp-guzel-sozler/cancel.png'; ?>" /></a>
             </td>
         </tr>
         <?php

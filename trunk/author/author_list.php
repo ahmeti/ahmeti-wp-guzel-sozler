@@ -15,9 +15,9 @@ $toplam_sayfa=$soz_listesi_row['COUNT(wp_soz_author_id)'];
 $baslangic=($baslangic-1)*$page_limit;
 $siralama=AHMETI_SIRALAMA;
 $soz_listesi=mysql_query("SELECT wp_soz_author_id,wp_soz_author_name FROM wp_soz_author ORDER BY wp_soz_author_name ASC LIMIT $baslangic,$page_limit");
-$say=mysql_num_rows($soz_listesi);
+$say=mysql_fetch_assoc(mysql_query("SELECT COUNT(wp_soz_author_id) FROM wp_soz_author ORDER BY wp_soz_author_name ASC LIMIT $baslangic,$page_limit"));
 
-if($say > 0){
+if($say['COUNT(wp_soz_author_id)'] > 0){
     ?>
     <br/><br/>  
     <table style="width: 700px">
@@ -33,8 +33,8 @@ if($say > 0){
             <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz->wp_soz_author_id; ?></td>
             <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz->wp_soz_author_name; ?></td>
             <td style="padding: 5px;border: 1px solid #ddd;">
-                <a href="<?php echo PHP_D_URL; ?>&islem=author_guncelle&id=<?php echo $soz->wp_soz_author_id; ?>"><img src="<?php echo plugins_url().'/ahmeti_soz/add.png'; ?>" /></a>
-                <a href="<?php echo PHP_D_URL; ?>&islem=delete_author&id=<?php echo $soz->wp_soz_author_id; ?>"><img src="<?php echo plugins_url().'/ahmeti_soz/cancel.png'; ?>" /></a>
+                <a href="<?php echo PHP_D_URL; ?>&islem=author_guncelle&id=<?php echo $soz->wp_soz_author_id; ?>"><img src="<?php echo plugins_url().'/ahmeti-wp-guzel-sozler/add.png'; ?>" /></a>
+                <a href="<?php echo PHP_D_URL; ?>&islem=delete_author&id=<?php echo $soz->wp_soz_author_id; ?>"><img src="<?php echo plugins_url().'/ahmeti-wp-guzel-sozler/cancel.png'; ?>" /></a>
             </td>
         </tr>
         <?php

@@ -1,3 +1,4 @@
+<?php if(!defined('AHMETI_KONTROL')){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); } ?>
 <?php
 /* Soru ve şıklar için TinyMce */
 function ShowTinyMCE() {
@@ -20,12 +21,12 @@ add_filter('admin_head','ShowTinyMCE');
 
 <div style="display: block;padding: 20px 0 10px 0">
     <form id="form_gonder" action="<?php echo PHP_D_URL; ?>" method="post">
-        <h3 style="margin-bottom: 1px;">Kişi Adı</h3>
+        <h3 style="margin-bottom: 1px;">Yazar Adı</h3>
         <input type="text" name="kisi" />
         <br/><br/>
         <?php wp_editor('','author_content',$settings = array('textarea_rows'=> 5 ,'wpautop' => false));?>
         <br/><br/>
-        <input type="submit" value="Kişi Ekle" class="button" id="gonder_button"/>
+        <input type="submit" value="Yazar Ekle" class="button" id="gonder_button"/>
         <input type="hidden" name="islem" value="yeni_author_ekle_ok" />
     </form>
 </div>

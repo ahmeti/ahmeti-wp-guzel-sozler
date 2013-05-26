@@ -1,3 +1,6 @@
+<?php if(!defined('AHMETI_KONTROL')){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); } ?>
+<br/><br/>
+<h2>Söz Düzenle</h2>
 <?php
 // Söz Güncelleme Sayfası
 
@@ -6,7 +9,7 @@ $id=(int)$_GET['id'];
 $row=mysql_fetch_object(mysql_query("SELECT * FROM wp_soz WHERE soz_id=$id"));
 
 ?>
-<div style="display: block;padding: 20px 0 10px 0">
+<div style="display: block;padding: 0 0 10px 0">
     <form id="form_gonder" action="<?php echo PHP_D_URL; ?>" method="post"><!-- onsubmit="return false;" -->
         <h3 style="margin-bottom: 1px;">Söz</h3>
         <textarea id="soz" name="soz" style="width: 400px;height: 200px;border: 1px solid #ddd;padding: 5px"><?php echo $row->soz; ?></textarea>

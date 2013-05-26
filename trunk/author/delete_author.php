@@ -1,3 +1,4 @@
+<?php if(!defined('AHMETI_KONTROL')){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); } ?>
 <?php
 // Söz Silme Sayfası
 

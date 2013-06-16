@@ -17,16 +17,12 @@ if(empty($page) || !is_numeric($page)){
 }
 
 $toplam_sayfa=$soz_listesi_row['COUNT(soz_id)'];
-
-
 $baslangic=($baslangic-1)*$page_limit;
+
 $siralama=AHMETI_SIRALAMA;
 $soz_listesi=mysql_query("SELECT * FROM soz_view ORDER BY soz_id $siralama LIMIT $baslangic,$page_limit");
-$say=mysql_fetch_assoc(mysql_query("SELECT COUNT(soz_id) as say FROM soz_view ORDER BY soz_id $siralama LIMIT $baslangic,$page_limit"));
 
-
-
-if($say['say'] > 0){
+if($toplam_sayfa > 0){
     ?>
     <table style="width: 700px">
         <tr>
@@ -37,16 +33,16 @@ if($say['say'] > 0){
             <td style="padding: 5px;border: 1px solid #ddd;width: 80px;font-weight: bold">Düzenle / Sil</td>
         </tr>
         <?php
-        while ($soz=mysql_fetch_object($soz_listesi)){
+        while ($soz=mysql_fetch_assoc($soz_listesi)){
         ?>
         <tr>
-            <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz->soz_id; ?></td>
-            <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz->wp_soz_author_name; ?></td>
-            <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz->soz; ?></td>
-            <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz->aciklama; ?></td>
+            <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz['soz_id']; ?></td>
+            <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz['wp_soz_author_name']; ?></td>
+            <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz['soz']; ?></td>
+            <td style="padding: 5px;border: 1px solid #ddd;"><?php echo $soz['aciklama']; ?></td>
             <td style="padding: 5px;border: 1px solid #ddd;">
-                <a href="<?php echo PHP_D_URL; ?>&islem=guncelle&id=<?php echo $soz->soz_id; ?>"><img src="<?php echo plugins_url().'/ahmeti-wp-guzel-sozler/images/add.png'; ?>" /></a>
-                <a href="<?php echo PHP_D_URL; ?>&islem=sil&id=<?php echo $soz->soz_id; ?>"><img src="<?php echo plugins_url().'/ahmeti-wp-guzel-sozler/images/cancel.png'; ?>" /></a>
+                <a href="<?php echo PHP_D_URL; ?>&islem=guncelle&id=<?php echo $soz['soz_id']; ?>"><img src="<?php echo plugins_url().'/ahmeti-wp-guzel-sozler/images/add.png'; ?>" /></a>
+                <a href="<?php echo PHP_D_URL; ?>&islem=sil&id=<?php echo $soz['soz_id']; ?>"><img src="<?php echo plugins_url().'/ahmeti-wp-guzel-sozler/images/cancel.png'; ?>" /></a>
             </td>
         </tr>
         <?php

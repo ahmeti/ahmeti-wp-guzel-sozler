@@ -8,13 +8,13 @@ Stable tag: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Harika sözleri arşivleyip ve istediğiniz sayfalarda paylaşabilirsiniz...
+Harika sözleri arşivleyebileceğiniz ve istediğiniz sayfalarda paylaşabileceğiniz bir eklenti...
 
 == Description ==
 
-Harika sözleri arşivleyip ve istediğiniz sayfalarda paylaşabilirsiniz...
+Harika sözleri arşivleyebileceğiniz ve istediğiniz sayfalarda paylaşabileceğiniz bir eklenti...
 Güzel sözler arşivi oluşturmak istiyorsanız sizin için biçilmiş kaftan :)
-Kullanımı ise oldukça kolaydır. 2.0 versiyonu ile yedekleme ve geri yükleme özelliği eklenmiştir.
+Kullanımı ise oldukça kolaydır. 2.1 versiyonu ile yedekleme ve geri yükleme özelliği eklenmiştir.
 
 **Kişiselleştirin.**
 
@@ -38,6 +38,9 @@ Sadece sözü, sadece yazarı veya sadece açıklamayı gösterebilirsiniz.
 `<?php echo $Ahmeti_Soz['Aciklama']; ?>`
 
 == Changelog ==
+
+= 2.1 =
+* Söz ve yazar listesindeki sayfalama hatası giderildi.
 
 = 2.0 =
 * Yedekleme / Geri Yükleme özelliği eklendi.

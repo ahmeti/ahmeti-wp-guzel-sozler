@@ -4,7 +4,7 @@
     Plugin URI: http://ahmeti.net/
     Description: Harika sözleri arşivleyebileceğiniz ve istediğiniz sayfalarda paylaşabileceğiniz bir eklenti...
     Author: Ahmet İmamoğlu
-    Version: 2.0
+    Version: 2.1
     Author URI: http://ahmeti.net/
 */
 

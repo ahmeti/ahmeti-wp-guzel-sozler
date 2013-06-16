@@ -18,9 +18,9 @@ $toplam_sayfa=$soz_listesi_row['COUNT(wp_soz_author_id)'];
 $baslangic=($baslangic-1)*$page_limit;
 $siralama=AHMETI_SIRALAMA;
 $soz_listesi=mysql_query("SELECT wp_soz_author_id,wp_soz_author_name FROM wp_soz_author ORDER BY wp_soz_author_name ASC LIMIT $baslangic,$page_limit");
-$say=mysql_fetch_assoc(mysql_query("SELECT COUNT(wp_soz_author_id) as say FROM wp_soz_author ORDER BY wp_soz_author_name ASC LIMIT $baslangic,$page_limit"));
 
-if($say['say'] > 0){
+
+if($toplam_sayfa > 0){
     ?>
     <table style="width: 700px">
         <tr>

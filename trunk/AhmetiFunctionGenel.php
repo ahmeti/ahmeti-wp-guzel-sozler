@@ -80,7 +80,7 @@
 
     
     
-function ee_debug($data)
+function DebugAhmetiGuzelSozler($data)
 {
     ob_start();
     print_r($data);

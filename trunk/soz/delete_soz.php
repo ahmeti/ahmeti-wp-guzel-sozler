@@ -3,8 +3,8 @@
 // Söz Silme Sayfası
 
 $id=(int)$_GET['id'];
-
-$sil=mysql_query("DELETE FROM wp_soz WHERE soz_id=$id");
+$ahmetiPre=AHMETI_WP_PREFIX;
+$sil=mysql_query("DELETE FROM {$ahmetiPre}soz WHERE soz_id=$id");
 
 if ($sil){
     echo '<p class="ahmeti_ok">Söz başarıyla silindi.</p>';

@@ -1,15 +1,12 @@
 <?php if(!defined('AHMETI_KONTROL')){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); } ?>
-<br>
-<br>
-
 <h2>Sözleri Bilgisayarınıza Kaydedin...</h2>
 <p>Aşağıdaki kodları bir metin dosyasına kaydedebilirsiniz...</p>
 <?php
  //@set_time_limit(0);
 
 $xml_data ='<root>';
-
-$sql=mysql_query("SELECT * FROM soz_view");
+$ahmetiPre=AHMETI_WP_PREFIX;
+$sql=mysql_query("SELECT * FROM {$ahmetiPre}soz_view");
 while($row=mysql_fetch_assoc($sql)){
     $xml_data.='<Item>';
         $xml_data.='<soz_id>'.$row['soz_id'].'</soz_id>';

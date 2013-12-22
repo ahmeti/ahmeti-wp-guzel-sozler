@@ -1,6 +1,4 @@
 <?php if(!defined('AHMETI_KONTROL')){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); } ?>
-
-<br/><br/>
 <h2>Kullanım 1 :</h2>
 Sözü nerede göstermek istiyorsanız. 
 <pre style="display: inline;"><span style="background-color:#ddd;">&lt;?php echo ahmeti_wp_guzel_sozler(); ?&gt;</span> eklemeniz yeterlidir.</pre>
@@ -17,9 +15,19 @@ Sadece sözü, sadece yazarı veya sadece açıklamayı gösterebilirsiniz.<br/>
 <pre><span style="background-color:#ddd;">&lt;?php echo $Ahmeti_Soz['Yazar']; ?&gt;</span></pre>
 <pre><span style="background-color:#ddd;">&lt;?php echo $Ahmeti_Soz['Aciklama']; ?&gt;</span></pre>
 
-
 <div style="display: block;padding: 10px 0 10px 0">
-    <form id="form_ayarlar" action="<?php echo PHP_D_URL; ?>" method="post">
+    <form id="form_ayarlar" action="<?php echo PHP_D_URL; ?>&islem=ayar_kaydet" method="post">
+    <h2>Kullanım 3 :</h2>
+    Eklediğiniz sözlerin tamımını ziyaretçileriniz ile paylaşabilirsiniz.<br/>
+    Bunun için ilk önce <pre style="display: inline"><span style="background-color:#ddd;">Wp-Admin -> Sayfalar -> Yeni Sayfa Ekle</spen></pre> menüsünden bir sayfa oluşturmalısınız.<br/>
+    Sayfanın <pre style="display: inline"><span style="background-color:#ddd;">Yazı Kısa</spen></pre> (Sef Link) adını aşağıdaki Sayfa Benzersiz Adı kutusuna yazınız. Örneğin; harika-sozler<br/>
+    Daha sonra kullandığınız temanın <pre style="display: inline"><span style="background-color:#ddd;">page.php</spen></pre> dosyasının içine <pre style="display: inline"><span style="background-color:#ddd;">&lt;?php the_content(); ?&gt;</spen></pre> fonksiyonundan <span style="color: red;font-weight: bold">sonra</span> bu <pre style="display: inline"><span style="background-color:#ddd;">&lt;?php ahmeti_wp_guzel_sozler_in_page(); ?&gt;</span></pre> fonksiyonu ekleyiniz.<br/>
+     <h3 style="margin-bottom: 1px;">Sayfa Benzersiz Adı</h3>
+        <input type="text" name="sozListSlug" value="<?php echo @AHMETI_SOZ_LIST_SLUG; ?>" size="60"/>
+        
+        
+        
+        <div style="margin-bottom: 40px;"></div>
         <h3 style="margin-bottom: 1px;">Panel Söz Sıraması</h3>
         <select name="sirala">
             <option value="ASC" <?php if( AHMETI_SIRALAMA=="ASC" ){ echo 'selected="selected"';} ?>>Eskinden Yeniye Doğru</option>
@@ -41,7 +49,6 @@ Sadece sözü, sadece yazarı veya sadece açıklamayı gösterebilirsiniz.<br/>
         <br/><br/>
         <a style="margin-right:15px;" class="button" href="<?php echo admin_url(); ?>plugin-editor.php?file=ahmeti-wp-guzel-sozler%2Fcss%2Fstyle.css&plugin=ahmeti-wp-guzel-sozler%2Fstyle.css">CSS Sitili Düzenle</a>
         <input type="submit" value="Ayarları Güncelle" class="button" />
-        <input type="hidden" name="islem" value="ayar_kaydet" />
     </form>
 </div>
 

@@ -15,8 +15,8 @@ if (!empty($_POST)){
     }else{
 
         $slug_kisi=Sef_Link($kisi);
-
-        $sql=mysql_query("UPDATE wp_soz_author SET wp_soz_author_name='$kisi',wp_soz_author_slug='$slug_kisi',author_content='$author_content' WHERE wp_soz_author_id=$id") or die(mysql_error());
+        $ahmetiPre=AHMETI_WP_PREFIX;
+        $sql=mysql_query("UPDATE wp_soz_author SET {$ahmetiPre}soz_author_name='$kisi',wp_soz_author_slug='$slug_kisi',author_content='$author_content' WHERE wp_soz_author_id=$id") or die(mysql_error());
         
 
         if ($sql){

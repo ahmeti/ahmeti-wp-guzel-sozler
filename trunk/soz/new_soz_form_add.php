@@ -11,7 +11,8 @@ if (!empty($_POST)){
         echo '<p class="ahmeti_hata">Boş alan bırakmayınız.</p>';
 
     }else{
-        $soz_yaz=mysql_query("insert into wp_soz (soz_author_id,soz,aciklama) values ('$author_id','$soz','$aciklama')");
+        $ahmetiPre=AHMETI_WP_PREFIX;
+        $soz_yaz=mysql_query("insert into {$ahmetiPre}soz (soz_author_id,soz,aciklama) values ('$author_id','$soz','$aciklama')");
 
         if ($soz_yaz){
             echo '<p class="ahmeti_ok">Söz başarıyla eklendi.</p>';

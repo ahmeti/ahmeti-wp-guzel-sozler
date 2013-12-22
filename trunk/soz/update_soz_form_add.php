@@ -12,8 +12,8 @@ if(empty($soz) || empty($author_id)){
     echo '<p class="ahmeti_hata">Boş alan bırakmayınız.</p>';
 
 }else{
-
-    $sql=mysql_query("UPDATE wp_soz SET soz='$soz',aciklama='$aciklama',soz_author_id='$author_id' WHERE soz_id=$id");
+    $ahmetiPre=AHMETI_WP_PREFIX;
+    $sql=mysql_query("UPDATE {$ahmetiPre}soz SET soz='$soz',aciklama='$aciklama',soz_author_id='$author_id' WHERE soz_id=$id");
 
     if ($sql){
         echo '<p class="ahmeti_ok">Söz başarıyla güncellendi.</p>';

@@ -23,3 +23,8 @@
 .gunun_sozu{padding: 10px;width: 490px;letter-spacing: 0.5px;display: block;line-height: 2em; font:oblique 15px/2em Georgia,serif;}
 .gunun_sozu #soz_soz {}
 .gunun_sozu #soz_sahibi {margin-top: 5px;text-align: right;color: #B96400;}
+
+/* Admin Soz Table */
+.admin_soz_table {border-collapse: collapse;border-spacing: 0;}
+.admin_soz_table td {padding: 5px;border: 1px solid #ccc;}
+.admin_soz_table .tr_baslik {background-color: #d8e7f7;font-weight: bold}

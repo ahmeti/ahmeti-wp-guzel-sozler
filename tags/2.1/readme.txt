@@ -2,7 +2,7 @@
 Contributors: ahmeti
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HUXL44BC8SRHQ
 Tags: harika sözler, güzel sözler, söz arşivi, 
-Requires at least: 3.3
+Requires at least: 3.0
 Tested up to: 3.5.1
 Stable tag: 3.5.1
 License: GPLv2 or later
@@ -38,14 +38,6 @@ Sadece sözü, sadece yazarı veya sadece açıklamayı gösterebilirsiniz.
 `<?php echo $Ahmeti_Soz['Aciklama']; ?>`
 
 == Changelog ==
-
-= 3.1 =
-* Söz listeleme sayfasındaki küçük hata giderildi.
-
-= 3.0 =
-* Yazar ve söz listesinin ziyaretçilere gösterilmesi eklendi.
-* Arama özelliği eklendi.
-* Küçük hatalar giderildi.
 
 = 2.1 =
 * Söz ve yazar listesindeki sayfalama hatası giderildi.

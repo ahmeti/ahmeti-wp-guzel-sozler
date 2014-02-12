@@ -39,6 +39,9 @@ Sadece sözü, sadece yazarı veya sadece açıklamayı gösterebilirsiniz.
 
 == Changelog ==
 
+= 3.2 =
+* VIEW tablosu güncellendi.
+
 = 3.1 =
 * Söz listeleme sayfasındaki küçük hata giderildi.
 

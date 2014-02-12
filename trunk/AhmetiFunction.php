@@ -29,8 +29,14 @@ function ahmeti_soz_kurulum()
     
     if (in_array('soz_view',$table_list_array)){
         mysql_query('DROP VIEW IF EXISTS soz_view');
-    }    
+    }
 
+    if (in_array($soz_view,$table_list_array)){
+        mysql_query('DROP VIEW IF EXISTS $soz_view');
+    }
+    
+
+    
     
     // Güncellenmiş Tablola İsimlerinin Yeniden Listesini Al
     $table_list_array=null;
@@ -81,27 +87,29 @@ function ahmeti_soz_kurulum()
         (2, 'Ahmeti', 'ahmeti', '');";
 
         mysql_query($db_sql);
+        
+        $db_sql="INSERT INTO `{$sozTable}` (`soz_id`, `soz_author_id`, `soz`, `aciklama`) VALUES
+        (2, 2, 'Hayata karşı keskin olmayın. Gün gelir \"Hayatta yapmam!\" dedikleriniz alışkanlıklarınıza dönüşür.', 'Bursa sokaklarında yürürken aklıma gelmiş bir söz...'),
+        (3, 2, 'Bugün kendime sordum: \"Çalışmak için mi yaşıyorum, yoksa yaşamak için mi çalışıyorum\" diye...', ''),
+        (4, 2, 'Günün sonunda kendimize şöyle bir soru sorabiliriz: \"Bugün yaptıklarımızın hayatımıza ne faydası oldu.\"', '');";
+        mysql_query($db_sql);
     }
     
     
     
     
-    if (in_array($soz_view,$table_list_array)){
+    if(in_array($soz_view,$table_list_array)){
         //echo 'soz_view var';
     }else{
         // SQL ifadesi
-        $db_sql="CREATE VIEW `{$soz_view}` AS select `wp_soz`.`soz_id` AS `soz_id`,
-        `wp_soz_author`.`wp_soz_author_id` AS `wp_soz_author_id`,`wp_soz`.`soz` AS `soz`,
-        `wp_soz`.`aciklama` AS `aciklama`,`wp_soz_author`.`wp_soz_author_name` AS `wp_soz_author_name`,
-        `wp_soz_author`.`wp_soz_author_slug` AS `wp_soz_author_slug`,
-        `wp_soz_author`.`author_content` AS `author_content` from 
-        (`wp_soz` join `wp_soz_author` on((`wp_soz_author`.`wp_soz_author_id` = `wp_soz`.`soz_author_id`)));";
-        mysql_query($db_sql);   
-        
-        $db_sql="INSERT INTO `{$soz_view}` (`soz_id`, `soz_author_id`, `soz`, `aciklama`) VALUES
-        (2, 2, 'Hayata karşı keskin olmayın. Gün gelir \"Hayatta yapmam!\" dedikleriniz alışkanlıklarınıza dönüşür.', 'Bursa sokaklarında yürürken aklıma gelmiş bir söz...'),
-        (3, 2, 'Bugün kendime sordum: \"Çalışmak için mi yaşıyorum, yoksa yaşamak için mi çalışıyorum\" diye...', ''),
-        (4, 2, 'Günün sonunda kendimize şöyle bir soru sorabiliriz: \"Bugün yaptıklarımızın hayatımıza ne faydası oldu.\"', '');";
+        $db_sql="CREATE VIEW `$soz_view` AS select `$sozTable`.`soz_id` AS `soz_id`,
+        `$soz_authorTable`.`wp_soz_author_id` AS `wp_soz_author_id`,
+	`$sozTable`.`soz` AS `soz`,
+        `$sozTable`.`aciklama` AS `aciklama`,
+	`$soz_authorTable`.`wp_soz_author_name` AS `wp_soz_author_name`,
+        `$soz_authorTable`.`wp_soz_author_slug` AS `wp_soz_author_slug`,
+        `$soz_authorTable`.`author_content` AS `author_content` from 
+        (`$sozTable` join `$soz_authorTable` on((`$soz_authorTable`.`wp_soz_author_id` = `$sozTable`.`soz_author_id`)));";
         mysql_query($db_sql);
     }
 

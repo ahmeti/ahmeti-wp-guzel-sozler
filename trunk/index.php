@@ -26,18 +26,20 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-
-define('AHMETI_WP_PREFIX',$wpdb->prefix);
-define('AHMETI_KONTROL',true);
+define('AHMETI_KONTROL', true);
+define('AHMETI_WP_PREFIX', $wpdb->prefix);
+define('AHMETI_WP_QUOTES_TABLE', $wpdb->prefix.'ahmeti_wp_quote');
+define('AHMETI_WP_AUTHORS_TABLE', $wpdb->prefix.'ahmeti_wp_author');
 define('PHP_D_URL', admin_url().'admin.php?page=ahmeti_wp_guzel_sozler/index.php');
 
 
 /* Ayarları Al */
-$ayar=get_option('ahmeti_soz_setting');
-$ayarlar=explode(',',$ayar);
-define('AHMETI_SIRALAMA',$ayarlar[0]); // Sıralama ASC veya DESC
-define('AHMETI_SOZ_LIMIT',$ayarlar[1]); // Gosterim adeti 5,10,15,20
-@define('AHMETI_SOZ_LIST_SLUG',$ayarlar[2]); // Söz Listesini göstermek için "Page Slug" değeri
+$ayar = get_option('ahmeti_soz_setting');
+
+$ayarlar = explode(',', $ayar);
+define('AHMETI_SIRALAMA', isset($ayarlar[0]) ? $ayarlar[0] : 'DESC'); // Sıralama ASC veya DESC
+define('AHMETI_SOZ_LIMIT', isset($ayarlar[1]) ? $ayarlar[1] : 20); // Gosterim adeti 5,10,15,20
+define('AHMETI_SOZ_LIST_SLUG', isset($ayarlar[2]) ? $ayarlar[2] : ''); // Söz Listesini göstermek için "Page Slug" değeri
 
 
 require_once 'AhmetiFunction.php';
@@ -56,6 +58,8 @@ add_action('admin_menu', 'ahmeti_admin_menu');
 function ahmeti_index(){
    
     require_once 'header.php';
+
+	// $routes = [];
 
     
     /*      İ Ş L E M L E R     */
@@ -140,6 +144,3 @@ function ahmeti_index(){
     
     require_once 'footer.php';
 }
-
-
-?>

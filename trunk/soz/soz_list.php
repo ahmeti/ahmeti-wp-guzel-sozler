@@ -5,16 +5,16 @@
 global $wpdb;
 
 $count = ($wpdb->get_row($wpdb->prepare('SELECT COUNT(quote_id) as count FROM '.AHMETI_WP_QUOTES_TABLE, [])))->count;
-
 $page = isset($_GET['is_page']) && (int)$_GET['is_page'] > 0 ? (int)$_GET['is_page'] : 1;
+$start = ($page - 1) * AHMETI_SOZ_LIMIT;
 
-$baslangic = ($page - 1) * AHMETI_SOZ_LIMIT;
+$items = ahmeti_wp_guzel_sozler_quotes(
+    ['quote_id', 'author_name', 'quote', 'quote_desc'],
+    ['quote_id', 'DESC'],
+    [$start, AHMETI_SOZ_LIMIT]
+);
 
-$items = ahmeti_wp_guzel_sozler_quotes();
-
-// echo "pre".print_r($items); exit;
-
-if( $count > 0 ){
+if( count($items) > 0 ){
     ?>
     <table class="admin_soz_table">
         <tr class="tr_baslik">

@@ -340,7 +340,7 @@ function ahmeti_wp_guzel_sozler_author_soz_list($sozSahibiSef){
     
 }
 
-function ahmeti_wp_guzel_sozler_quotes($columns=[], $orderBy=['quote_id', 'DESC'], $limit = 20)
+function ahmeti_wp_guzel_sozler_quotes($columns=[], $orderBy=['quote_id', 'DESC'], $limit = [0, 20])
 {
 	$columns = empty($columns) ? '*' : implode(',', $columns);
 
@@ -348,6 +348,7 @@ function ahmeti_wp_guzel_sozler_quotes($columns=[], $orderBy=['quote_id', 'DESC'
 	return $wpdb->get_results($wpdb->prepare(
         'SELECT '.$columns.' FROM '.AHMETI_WP_QUOTES_TABLE.' as quote '.
         'LEFT JOIN '.AHMETI_WP_AUTHORS_TABLE.' as author ON author.author_id = quote.quote_author_id '.
-        'ORDER BY '.$orderBy[0].' '.$orderBy[1]
+        'ORDER BY '.$orderBy[0].' '.$orderBy[1].' '.
+        'LIMIT '.$limit[0].', '.$limit[1]
     , ['']));
 }

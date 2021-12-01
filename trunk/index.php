@@ -34,12 +34,10 @@ define('PHP_D_URL', admin_url().'admin.php?page=ahmeti_wp_guzel_sozler/index.php
 
 
 /* Ayarları Al */
-$ayar = get_option('ahmeti_soz_setting');
-
-$ayarlar = explode(',', $ayar);
+$ayarlar = explode(',', (string)get_option('ahmeti_soz_setting'));
 define('AHMETI_SIRALAMA', isset($ayarlar[0]) ? $ayarlar[0] : 'DESC'); // Sıralama ASC veya DESC
 define('AHMETI_SOZ_LIMIT', isset($ayarlar[1]) ? $ayarlar[1] : 20); // Gosterim adeti 5,10,15,20
-define('AHMETI_SOZ_LIST_SLUG', isset($ayarlar[2]) ? $ayarlar[2] : ''); // Söz Listesini göstermek için "Page Slug" değeri
+define('AHMETI_SOZ_LIST_SLUG', isset($ayarlar[2]) ? $ayarlar[2] : 'harika-sozler'); // Söz Listesini göstermek için "Page Slug" değeri
 
 
 require_once 'AhmetiFunction.php';

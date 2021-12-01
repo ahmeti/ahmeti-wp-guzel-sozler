@@ -28,8 +28,8 @@
 
 define('AHMETI_KONTROL', true);
 define('AHMETI_WP_PREFIX', $wpdb->prefix);
-define('AHMETI_WP_QUOTES_TABLE', $wpdb->prefix.'ahmeti_wp_quote');
 define('AHMETI_WP_AUTHORS_TABLE', $wpdb->prefix.'ahmeti_wp_author');
+define('AHMETI_WP_QUOTES_TABLE', $wpdb->prefix.'ahmeti_wp_quote');
 define('PHP_D_URL', admin_url().'admin.php?page=ahmeti_wp_guzel_sozler/index.php');
 
 
@@ -43,14 +43,12 @@ define('AHMETI_SOZ_LIST_SLUG', isset($ayarlar[2]) ? $ayarlar[2] : 'harika-sozler
 require_once 'AhmetiFunction.php';
 require_once 'AhmetiFunctionGenel.php';
 
-if ( isset($_GET['activate']) && @$_GET['activate'] == 'true' )
+if ( isset($_GET['activate']) && $_GET['activate'] == 'true' )
 {
-    // Eğer kullanıcı "Etkinleştir" bağlantısına tıkladıysa, fonksiyonunu çağır
-    /* Kurulum */
-    add_action('init', 'ahmeti_soz_kurulum');
+	add_action("activated_plugin", "ahmeti_soz_kurulum");
 }
 
-//Admin Panel - Yonetim Paneli Olusturma
+// Admin Panel - Yonetim Paneli Olusturma
 add_action('admin_menu', 'ahmeti_admin_menu');
 
 function ahmeti_index(){

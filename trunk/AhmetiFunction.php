@@ -4,7 +4,7 @@ function ahmeti_soz_kurulum()
 {
 	global $wpdb;
 
-	$tables = $wpdb->get_results($wpdb->prepare('SHOW TABLES FROM '.DB_NAME, []), ARRAY_N);
+	$tables = $wpdb->get_results("SHOW TABLES", ARRAY_N);
 	$tables = array_map(function ($item){ return $item[0]; }, $tables);
 
 	// AUTHORS TABLE CHECK

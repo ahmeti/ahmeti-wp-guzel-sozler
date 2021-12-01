@@ -2,123 +2,75 @@
 <?php
 function ahmeti_soz_kurulum()
 {
-    // Oluşturulacak Tablo İsimleri...
-    $sozTable = AHMETI_WP_PREFIX . 'soz';
-    $soz_authorTable = AHMETI_WP_PREFIX . 'soz_author';
-    $soz_view = AHMETI_WP_PREFIX.'soz_view';
-    
-    
-    
-    // Tablo ve Viewlerin Listesini Al...
-    $table_list_array=array();
-    $table_list=mysql_query("SHOW TABLES FROM ".DB_NAME);
-    while($row=mysql_fetch_row($table_list)){
-        $table_list_array[]=$row[0];
-    }
-    
-    
-    
-    // Change Old Tables Names...
-    if (in_array('wp_soz',$table_list_array)){
-        mysql_query('RENAME TABLE  `'.DB_NAME.'`.`wp_soz` TO  `'.DB_NAME.'`.`'.$sozTable.'` ');
-    }
-    
-    if (in_array('wp_soz_author',$table_list_array)){
-        mysql_query('RENAME TABLE  `'.DB_NAME.'`.`wp_soz_author` TO  `'.DB_NAME.'`.`'.$soz_authorTable.'` ');
-    }    
-    
-    if (in_array('soz_view',$table_list_array)){
-        mysql_query('DROP VIEW IF EXISTS soz_view');
-    }
+	global $wpdb;
 
-    if (in_array($soz_view,$table_list_array)){
-        mysql_query('DROP VIEW IF EXISTS $soz_view');
-    }
-    
+	$tables = $wpdb->get_results($wpdb->prepare('SHOW TABLES FROM '.DB_NAME, []), ARRAY_N);
+	$tables = array_map(function ($item){ return $item[0]; }, $tables);
 
-    
-    
-    // Güncellenmiş Tablola İsimlerinin Yeniden Listesini Al
-    $table_list_array=null;
-    $table_list=mysql_query("SHOW TABLES FROM ".DB_NAME);
-    while($row=mysql_fetch_row($table_list)){
-        $table_list_array[]=$row[0];
-    }
-    
+	// AUTHORS TABLE CHECK
+	if ( ! in_array(AHMETI_WP_AUTHORS_TABLE, $tables, true) ){
+		$sql = "CREATE TABLE ".AHMETI_WP_AUTHORS_TABLE." (
+            `author_id` mediumint unsigned NOT NULL AUTO_INCREMENT,
+            `author_name` varchar(255) NOT NULL,
+            `author_slug` varchar(255) NOT NULL,
+            `author_content` mediumtext NOT NULL,
+            PRIMARY KEY (`author_id`),
+            UNIQUE KEY `wp_soz_author_slug` (`author_slug`)
+        ) ".$wpdb->get_charset_collate().";";
 
-    
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta($sql);
+	}
 
+    // QUOTES TABLE CHECK
+    if ( ! in_array(AHMETI_WP_QUOTES_TABLE, $tables, true) ){
+	    $sql = "CREATE TABLE ".AHMETI_WP_QUOTES_TABLE." (
+            `quote_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+            `quote_author_id` mediumint(8) unsigned NOT NULL,
+            `quote` mediumtext NOT NULL,
+            `quote_desc` mediumtext,
+            PRIMARY KEY (`quote_id`)
+        ) ".$wpdb->get_charset_collate().";";
 
-    // Soz Tablosu
-    if (in_array($sozTable,$table_list_array)){
-        //echo 'wp_soz var';
-    }else{
-        // SQL ifadesi
-        $db_sql="CREATE TABLE IF NOT EXISTS `$sozTable` (
-        `soz_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-        `soz_author_id` mediumint(8) unsigned NOT NULL,
-        `soz` mediumtext NOT NULL,
-        `aciklama` mediumtext,
-        PRIMARY KEY (`soz_id`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-        ";
-        mysql_query($db_sql);
-    }
-    
-    
-    
-    // wp_soz_author Tablosu
-    if (in_array($soz_authorTable,$table_list_array)){
-        //echo 'wp_soz_author var';
-    }else{
-        // SQL ifadesi
-        $db_sql="CREATE TABLE IF NOT EXISTS `$soz_authorTable` (
-          `wp_soz_author_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-          `wp_soz_author_name` varchar(255) NOT NULL,
-          `wp_soz_author_slug` varchar(255) NOT NULL,
-          `author_content` mediumtext NOT NULL,
-          PRIMARY KEY (`wp_soz_author_id`),
-          UNIQUE KEY `wp_soz_author_slug` (`wp_soz_author_slug`)
-        ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
-
-        mysql_query($db_sql);
-        
-        $db_sql="INSERT INTO `{$soz_authorTable}` (`wp_soz_author_id`, `wp_soz_author_name`, `wp_soz_author_slug`, `author_content`) VALUES
-        (2, 'Ahmeti', 'ahmeti', '');";
-
-        mysql_query($db_sql);
-        
-        $db_sql="INSERT INTO `{$sozTable}` (`soz_id`, `soz_author_id`, `soz`, `aciklama`) VALUES
-        (2, 2, 'Hayata karşı keskin olmayın. Gün gelir \"Hayatta yapmam!\" dedikleriniz alışkanlıklarınıza dönüşür.', 'Bursa sokaklarında yürürken aklıma gelmiş bir söz...'),
-        (3, 2, 'Bugün kendime sordum: \"Çalışmak için mi yaşıyorum, yoksa yaşamak için mi çalışıyorum\" diye...', ''),
-        (4, 2, 'Günün sonunda kendimize şöyle bir soru sorabiliriz: \"Bugün yaptıklarımızın hayatımıza ne faydası oldu.\"', '');";
-        mysql_query($db_sql);
-    }
-    
-    
-    
-    
-    if(in_array($soz_view,$table_list_array)){
-        //echo 'soz_view var';
-    }else{
-        // SQL ifadesi
-        $db_sql="CREATE VIEW `$soz_view` AS select `$sozTable`.`soz_id` AS `soz_id`,
-        `$soz_authorTable`.`wp_soz_author_id` AS `wp_soz_author_id`,
-	`$sozTable`.`soz` AS `soz`,
-        `$sozTable`.`aciklama` AS `aciklama`,
-	`$soz_authorTable`.`wp_soz_author_name` AS `wp_soz_author_name`,
-        `$soz_authorTable`.`wp_soz_author_slug` AS `wp_soz_author_slug`,
-        `$soz_authorTable`.`author_content` AS `author_content` from 
-        (`$sozTable` join `$soz_authorTable` on((`$soz_authorTable`.`wp_soz_author_id` = `$sozTable`.`soz_author_id`)));";
-        mysql_query($db_sql);
+	    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	    dbDelta($sql);
     }
 
+    // CREATE SAMPLES
+	if ( ! in_array(AHMETI_WP_AUTHORS_TABLE, $tables, true) && ! in_array(AHMETI_WP_QUOTES_TABLE, $tables, true) ){
+		$wpdb->insert(AHMETI_WP_AUTHORS_TABLE, [
+            'author_id' => 1,
+            'author_name' => 'Ahmeti',
+            'author_slug' => 'ahmeti',
+            'author_content' => '',
+        ]);
+
+		$wpdb->insert(AHMETI_WP_QUOTES_TABLE, [
+			'quote_id' => 1,
+			'quote_author_id' => 1,
+			'quote' => 'Hayata karşı keskin olmayın. Gün gelir "Hayatta yapmam!" dedikleriniz alışkanlıklarınıza dönüşür.',
+			'quote_desc' => 'Bursa sokaklarında yürürken aklıma gelmiş bir söz...',
+		]);
+
+		$wpdb->insert(AHMETI_WP_QUOTES_TABLE, [
+			'quote_id' => 2,
+			'quote_author_id' => 1,
+			'quote' => 'Bugün kendime sordum: "Çalışmak için mi yaşıyorum, yoksa yaşamak için mi çalışıyorum" diye...',
+			'quote_desc' => '',
+		]);
+
+		$wpdb->insert(AHMETI_WP_QUOTES_TABLE, [
+			'quote_id' => 3,
+			'quote_author_id' => 1,
+			'quote' => 'Günün sonunda kendimize şöyle bir soru sorabiliriz; "Bugün yaptıklarımızın hayatımıza ne faydası oldu."',
+			'quote_desc' => '',
+		]);
+    }
 
     // Ayar Meta Var mı?
-    if (get_option('ahmeti_soz_setting') == false ){
-        add_option('ahmeti_soz_setting', 'ASC,10');
+    if ( get_option('ahmeti_soz_setting') == false ){
+        add_option('ahmeti_soz_setting', 'ASC,10,harika-sozler');
     }
-    
 }
 
 

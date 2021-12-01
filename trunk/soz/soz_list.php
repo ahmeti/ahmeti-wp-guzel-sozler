@@ -2,63 +2,52 @@
 <h2>Söz Listesi</h2>
 <?php
 
-/* Sayfalama İçin */
-$page=@$_GET['is_page'];
-$page_limit=AHMETI_SOZ_LIMIT;
-$ahmetiPre=AHMETI_WP_PREFIX;
-$soz_listesi_row=mysql_fetch_assoc(mysql_query("SELECT COUNT(soz_id) FROM {$ahmetiPre}soz_view"));
+global $wpdb;
 
-if(empty($page) || !is_numeric($page)){
-    $baslangic=1;
-    $page=1;
-}else{
-    $baslangic=$page;
-}
+$count = ($wpdb->get_row($wpdb->prepare('SELECT COUNT(quote_id) as count FROM '.AHMETI_WP_QUOTES_TABLE, [])))->count;
 
-$toplam_sayfa=$soz_listesi_row['COUNT(soz_id)'];
-$baslangic=($baslangic-1)*$page_limit;
+$page = isset($_GET['is_page']) && (int)$_GET['is_page'] > 0 ? (int)$_GET['is_page'] : 1;
 
-$siralama=AHMETI_SIRALAMA;
+$baslangic = ($page - 1) * AHMETI_SOZ_LIMIT;
 
-$soz_listesi=mysql_query("SELECT * FROM {$ahmetiPre}soz_view ORDER BY soz_id $siralama LIMIT $baslangic,$page_limit");
+$items = ahmeti_wp_guzel_sozler_quotes();
 
-if($toplam_sayfa > 0){
+// echo "pre".print_r($items); exit;
+
+if( $count > 0 ){
     ?>
-    <table style="width: 700px" class="admin_soz_table">
+    <table class="admin_soz_table">
         <tr class="tr_baslik">
-            <td style="width: 50px;">ID</td>
-            <td style="width: 100px;">Yazar</td>
-            <td style="width: 400px;">Söz</td>
-            <td style="width: 190px">Açıklama</td>
-            <td style="width: 80px;">Düzenle</td>
-            <td style="width: 80px;">Sil</td>
+            <td>ID</td>
+            <td>Düzenle</td>
+            <td>Sil</td>
+            <td style="width: 140px;">Yazar</td>
+            <td>Söz</td>
+            <td style="width: 140px">Açıklama</td>
         </tr>
         <?php
-        while ($soz=mysql_fetch_assoc($soz_listesi)){
+        foreach ($items as $item){
         ?>
         <tr>
-            <td><?php echo $soz['soz_id']; ?></td>
-            <td><?php echo $soz['wp_soz_author_name']; ?></td>
-            <td><?php echo $soz['soz']; ?></td>
-            <td><?php echo $soz['aciklama']; ?></td>
+            <td><?php echo $item->quote_id; ?></td>
             <td>
-                <a href="<?php echo PHP_D_URL; ?>&islem=guncelle&id=<?php echo $soz['soz_id']; ?>">Düzenle</a>
+                <a href="<?php echo PHP_D_URL; ?>&islem=guncelle&id=<?php echo $item->quote_id; ?>">Düzenle</a>
             </td>
             <td>
-                <a onclick="return confirm('Silmek istediğinizden emin misiniz?')" href="<?php echo PHP_D_URL; ?>&islem=sil&id=<?php echo $soz['soz_id']; ?>">Sil</a>
+                <a onclick="return confirm('Silmek istediğinizden emin misiniz?')" href="<?php echo PHP_D_URL; ?>&islem=sil&id=<?php echo $item->quote_id; ?>">Sil</a>
             </td>
-            
+            <td><?php echo $item->author_name; ?></td>
+            <td><?php echo $item->quote; ?></td>
+            <td><?php echo $item->quote_desc; ?></td>
         </tr>
         <?php
         }
-
         ?>
     </table>
 
     <?php            
 
-        
-        sayfala(PHP_D_URL,$toplam_sayfa,$page,$page_limit,'');
+        sayfala(PHP_D_URL, $count, $page, AHMETI_SOZ_LIMIT, '');
 
 }else{
     // Söz yok ise uyarı mesajı ver.
@@ -66,4 +55,3 @@ if($toplam_sayfa > 0){
     <p class="ahmeti_hata">Hiç söz eklememişsiniz :(</p>
     <?php
 }
-?>

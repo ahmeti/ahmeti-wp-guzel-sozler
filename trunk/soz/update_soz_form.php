@@ -3,9 +3,8 @@
 <h2>Söz Düzenle</h2>
 
 <?php
-global $wpdb;
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$quote = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.AHMETI_WP_QUOTES_TABLE.' WHERE quote_id = %d', [$id]));
+$quote = ahmeti_wp_db()->get_row(ahmeti_wp_db()->prepare('SELECT * FROM '.AHMETI_WP_QUOTES_TABLE.' WHERE quote_id = %d', [$id]));
 
 ?>
 <div style="display: block;padding: 0 0 10px 0">

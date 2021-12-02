@@ -1,29 +1,32 @@
-<?php if(!defined('AHMETI_KONTROL')){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); } ?>
 <?php
-if (!empty($_POST)){
 
+if( ! defined('AHMETI_KONTROL') ){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); }
 
-    $id=(int)$_POST['id'];
-    $kisi=mysql_real_escape_string(trim(stripslashes($_POST['kisi'])));
-    $author_content=mysql_real_escape_string(trim(stripslashes($_POST['author_content'])));
+if ( empty($_POST) ){
+	return '';
+}
 
-    
-    if(empty($kisi) || empty($id)){
+$id = isset($_POST['id']) ? $_POST['id'] : '';
+$authorName = isset($_POST['kisi']) ? $_POST['kisi'] : '';
+$authorContent = isset($_POST['author_content']) ? $_POST['author_content'] : '';
 
-        echo '<p class="ahmeti_hata">Boş alan bırakmayınız.</p>';
+if( empty($id) || empty($authorName) ){
 
+    echo '<p class="ahmeti_hata">Boş alan bırakmayınız.</p>';
+
+}else{
+
+	$status = ahmeti_wp_db()->update(AHMETI_WP_AUTHORS_TABLE, [
+		'author_name' => $authorName,
+		'author_slug' => ahmeti_wp_guzel_sozler_sef_link($authorName),
+		'author_content' => $authorContent,
+	], [
+		'author_id' => $id
+	]);
+
+    if ( $status ){
+        echo '<p class="ahmeti_ok">Yazar başarıyla güncellendi.</p>';
     }else{
-
-        $slug_kisi=Sef_Link($kisi);
-        $ahmetiPre=AHMETI_WP_PREFIX;
-        $sql=mysql_query("UPDATE wp_soz_author SET {$ahmetiPre}soz_author_name='$kisi',wp_soz_author_slug='$slug_kisi',author_content='$author_content' WHERE wp_soz_author_id=$id") or die(mysql_error());
-        
-
-        if ($sql){
-            echo '<p class="ahmeti_ok">Kişi başarıyla güncellendi.</p>';
-        }else{
-            echo '<p class="ahmeti_hata">Kişi güncellenirken hata oluştu.</p>';
-        }                
+        echo '<p class="ahmeti_hata">Yazar güncellenirken hata oluştu.</p>';
     }
 }
-?>

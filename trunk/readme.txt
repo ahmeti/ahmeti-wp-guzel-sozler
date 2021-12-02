@@ -1,43 +1,58 @@
-=== Plugin Name ===
+=== Ahmeti Wp Güzel Sözler ===
 Contributors: ahmeti
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HUXL44BC8SRHQ
-Tags: harika sözler, güzel sözler, söz arşivi, 
+Tags: harika sözler, güzel sözler, söz arşivi, quotes, author
 Requires at least: 3.3
-Tested up to: 3.5.1
-Stable tag: 3.5.1
+Tested up to: 5.8.2
+Stable tag: 5.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Requires PHP: 5.4
 
 Harika sözleri arşivleyebileceğiniz ve istediğiniz sayfalarda paylaşabileceğiniz bir eklenti...
 
 == Description ==
 
 Harika sözleri arşivleyebileceğiniz ve istediğiniz sayfalarda paylaşabileceğiniz bir eklenti...
+
 Güzel sözler arşivi oluşturmak istiyorsanız sizin için biçilmiş kaftan :)
-Kullanımı ise oldukça kolaydır. 2.1 versiyonu ile yedekleme ve geri yükleme özelliği eklenmiştir.
 
-**Kişiselleştirin.**
+Tüm yazarların listesini göstermek için; Wordpress'te standart bir yazı veya sayfa oluşturun. içeriğine aşağıdaki kısa kodu yazınız.
 
-Değişkenleri parçalara bölerek kullanın...
-Daha sonra sözü, yazarı ve söz açıklamasını istediğiniz yerde gösterin.
-Sadece sözü, sadece yazarı veya sadece açıklamayı gösterebilirsiniz.
+`[ahmeti_wp_guzel_sozler]`
 
+Aşağıdaki kodu rastgele bir sözü nerede kullanmak isterseniz ekleyiniz. Sayfa yenilendiğinde söz de değişecektir.
 
-[Detaylar için Yükleme Sayfasına Bakın](http://wordpress.org/plugins/ahmeti-wp-guzel-sozler/installation/) | 
-[İlgili Yazıyı Takip Edin](http://ahmeti.net/ahmeti-wp-guzel-sozler-1-0/)
+`<php ahmeti_wp_guzel_sozler_random(true); ?>`
+
+Kişiselleştirin ve değişkenleri parçalara bölerek kullanın...
+
+`<?php
+
+    $soz = ahmeti_wp_guzel_sozler_random();
+
+    echo $soz->quote_id;
+    echo $soz->author_id;
+    echo $soz->author_name;
+    echo $soz->author_slug;
+    echo $soz->quote;
+    echo $soz->quote_desc;
+
+?>`
+
+[Detaylar için Yükleme Sayfasına Bakın](http://wordpress.org/plugins/ahmeti-wp-guzel-sozler/installation/)
+
+[İlgili Yazıyı Takip Edin](https://ahmetimamoglu.com.tr/ahmeti-wp-guzel-sozler-1-0)
 
 == Installation ==
 
 1. `/wp-content/plugins/` klasörünün içerisine .zip dosyasından çıkan "ahmeti-wp-guzel-sozler" klasörünü atınız.
 1. "Plugins" menüsünden eklentiyi aktif ediniz.
-1. `<?php echo ahmeti_wp_guzel_sozler(); ?>` kodunu sözü nerede kullanmak isterseniz ekleyiniz veya
-1. Kişiselleştirin. Değişkenleri parçalara bölerek kullanın... Daha sonra sözü, yazarı ve söz açıklamasını istediğiniz yerde gösteriniz. Sadece sözü, sadece yazarı veya sadece açıklamayı gösterebilirsiniz.
-`<?php $Ahmeti_Soz=ahmeti_wp_guzel_sozler_ayri(); ?>` fonksiyonunu kullanarak dönen değerleri değişkene aktarın.
-`<?php echo $Ahmeti_Soz['Soz']; ?>`
-`<?php echo $Ahmeti_Soz['Yazar']; ?>`
-`<?php echo $Ahmeti_Soz['Aciklama']; ?>`
 
 == Changelog ==
+
+= 4.0 =
+* $wpdb ile uyumluluk sağlandı.
+* shortcode desteği ilave edildi.
 
 = 3.2 =
 * VIEW tablosu güncellendi.
@@ -84,3 +99,4 @@ Ekran görüntüleri eklendi.
 1. Örnek `<?php echo ahmeti_wp_guzel_sozler(); ?>` Fonksiyonu Çıktı Görüntüsü
 1. Genel Sayfa Görüntüsü
 
+syncdir /Users/ahmet/code/ahmeti-wp-guzel-sozler/trunk /Users/ahmet/code/wordpress-test/wp-content/plugins/ahmeti-wp-guzel-sozler -w

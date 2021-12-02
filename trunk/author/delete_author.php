@@ -1,26 +1,25 @@
-<?php if(!defined('AHMETI_KONTROL')){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); } ?>
 <?php
-// Söz Silme Sayfası
 
-$id=(int)$_GET['id'];
+if( ! defined('AHMETI_KONTROL') ){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); }
 
-$ahmetiPre=AHMETI_WP_PREFIX;
+$id = isset($_GET['id']) ? $_GET['id'] : '';
 
-$soz_varmi=mysql_fetch_object(mysql_query("SELECT COUNT(soz_author_id) as say FROM {$ahmetiPre}soz WHERE soz_author_id=$id"));
+$count = (ahmeti_wp_db()->get_row(ahmeti_wp_db()->prepare('SELECT COUNT(quote_id) as count FROM '.AHMETI_WP_QUOTES_TABLE.' WHERE quote_author_id = %d', [$id])))->count;
 
-if ($soz_varmi->say > 0){
+if ( $count > 0 ){
     
     echo '<p class="ahmeti_hata">Bu yazara ait söz bulunduğu için silinmedi.</p>';
     
 }else{
-    $sil=mysql_query("DELETE FROM {$ahmetiPre}soz_author WHERE wp_soz_author_id=$id");
+
+    $status = ahmeti_wp_db()->delete(AHMETI_WP_AUTHORS_TABLE, [
+        'author_id' => $id
+    ]);
     
-    if ($sil){
+    if ( $status ){
         echo '<p class="ahmeti_ok">Yazar başarıyla silindi.</p>';
     }else{
         echo '<p class="ahmeti_hata">Yazar silinirken hata oluştu.</p>';
     }
+
 }
-
-
-?>

@@ -16,8 +16,7 @@ if( empty($quote) || empty($authorId) ){
 
 }else{
 
-	global $wpdb;
-    $status = $wpdb->insert(AHMETI_WP_QUOTES_TABLE, [
+    $status = ahmeti_wp_db()->insert(AHMETI_WP_QUOTES_TABLE, [
 	    'quote_author_id' => $authorId,
 	    'quote' => $quote,
 	    'quote_desc' => $quoteDesc,

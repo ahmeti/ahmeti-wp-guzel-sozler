@@ -19,9 +19,9 @@ Sadece sözü, sadece yazarı veya sadece açıklamayı gösterebilirsiniz.<br/>
     <form id="form_ayarlar" action="<?php echo PHP_D_URL; ?>&islem=ayar_kaydet" method="post">
     <h2>Kullanım 3 :</h2>
     Eklediğiniz sözlerin tamımını ziyaretçileriniz ile paylaşabilirsiniz.<br/>
-    Bunun için ilk önce <pre style="display: inline"><span style="background-color:#ddd;">Wp-Admin -> Sayfalar -> Yeni Sayfa Ekle</spen></pre> menüsünden bir sayfa oluşturmalısınız.<br/>
-    Sayfanın <pre style="display: inline"><span style="background-color:#ddd;">Yazı Kısa</spen></pre> (Sef Link) adını aşağıdaki Sayfa Benzersiz Adı kutusuna yazınız. Örneğin; harika-sozler<br/>
-    Daha sonra kullandığınız temanın <pre style="display: inline"><span style="background-color:#ddd;">page.php</spen></pre> dosyasının içine <pre style="display: inline"><span style="background-color:#ddd;">&lt;?php the_content(); ?&gt;</spen></pre> fonksiyonundan <span style="color: red;font-weight: bold">sonra</span> bu <pre style="display: inline"><span style="background-color:#ddd;">&lt;?php ahmeti_wp_guzel_sozler_in_page(); ?&gt;</span></pre> fonksiyonu ekleyiniz.<br/>
+    Bunun için ilk önce <pre style="display: inline"><span style="background-color:#ddd;">Wp-Admin -> Sayfalar -> Yeni Sayfa Ekle</span></pre> menüsünden bir sayfa oluşturmalısınız.<br/>
+    Sayfanın <pre style="display: inline"><span style="background-color:#ddd;">Yazı Kısa</span></pre> (Sef Link) adını aşağıdaki Sayfa Benzersiz Adı kutusuna yazınız. Örneğin; harika-sozler<br/>
+    Daha sonra kullandığınız temanın <pre style="display: inline"><span style="background-color:#ddd;">page.php</span></pre> dosyasının içine <pre style="display: inline"><span style="background-color:#ddd;">&lt;?php the_content(); ?&gt;</span></pre> fonksiyonundan <span style="color: red;font-weight: bold">sonra</span> bu <pre style="display: inline"><span style="background-color:#ddd;">&lt;?php ahmeti_wp_guzel_sozler_in_page(); ?&gt;</span></pre> fonksiyonu ekleyiniz.<br/>
      <h3 style="margin-bottom: 1px;">Sayfa Benzersiz Adı</h3>
         <input type="text" name="sozListSlug" value="<?php echo @AHMETI_SOZ_LIST_SLUG; ?>" size="60"/>
         

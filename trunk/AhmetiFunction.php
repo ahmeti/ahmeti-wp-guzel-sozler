@@ -382,7 +382,7 @@ function ahmeti_wp_guzel_sozler_quotes($columns=[], $orderBy=['quote_id', 'DESC'
 		, ['']));
 }
 
-function ahmeti_wp_guzel_sozler_authors($columns=[], $orderBy=['quote_id', 'DESC'], $limit = [0, 20])
+function ahmeti_wp_guzel_sozler_authors($columns=[], $orderBy=['author_id', 'DESC'], $limit = [0, 20])
 {
 	$columns = empty($columns) ? '*' : implode(',', $columns);
 

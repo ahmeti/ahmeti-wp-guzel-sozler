@@ -68,9 +68,9 @@ function ahmeti_wp_guzel_sozler_install()
     }
 
     // Ayar Meta Var mı?
-    if ( get_option('ahmeti_soz_setting') == false ){
-        add_option('ahmeti_soz_setting', 'ASC,10,harika-sozler');
-    }
+    /*if ( get_option('ahmeti_soz_setting') == false ){
+        add_option('ahmeti_soz_setting', 'ASC,10');
+    }*/
 }
 
 function ahmeti_wp_guzel_sozler_admin_head()

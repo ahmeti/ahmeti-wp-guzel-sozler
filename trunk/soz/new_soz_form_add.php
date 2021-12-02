@@ -1,24 +1,28 @@
 <?php if(!defined('AHMETI_KONTROL')){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); } ?>
 <?php
-if (!empty($_POST)){
+if ( ! empty($_POST) ){
 
-    $soz=mysql_real_escape_string(trim(stripslashes($_POST['soz'])));
-    $aciklama=mysql_real_escape_string(trim(stripslashes($_POST['aciklama'])));
-    $author_id=(int)$_POST['author_id'];
+    $quote = isset($_POST['soz']) ? $_POST['soz'] : '';
+    $quoteDesc = isset($_POST['aciklama']) ? $_POST['aciklama'] : '';
+    $authorId = isset($_POST['author_id']) ? $_POST['author_id'] : '';
 
-    if(empty($soz) || empty($author_id)){
+    if( empty($quote) || empty($authorId) ){
 
         echo '<p class="ahmeti_hata">Boş alan bırakmayınız.</p>';
 
     }else{
-        $ahmetiPre=AHMETI_WP_PREFIX;
-        $soz_yaz=mysql_query("insert into {$ahmetiPre}soz (soz_author_id,soz,aciklama) values ('$author_id','$soz','$aciklama')");
 
-        if ($soz_yaz){
+		global $wpdb;
+	    $status = $wpdb->insert(AHMETI_WP_QUOTES_TABLE, [
+		    'quote_author_id' => $authorId,
+		    'quote' => $quote,
+		    'quote_desc' => $quoteDesc,
+	    ]);
+
+        if ( $status ){
             echo '<p class="ahmeti_ok">Söz başarıyla eklendi.</p>';
         }else{
             echo '<p class="ahmeti_hata">Söz eklenirken hata oluştu.</p>';
         }                
     }
 }
-?>

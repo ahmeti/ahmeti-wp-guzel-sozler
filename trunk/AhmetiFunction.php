@@ -326,7 +326,7 @@ function Sayfala($site_url,$top_sayfa,$page,$limit,$page_url)
 	endif;
 }
 
-function Sef_Link($link_yap)
+function ahmeti_wp_guzel_sozler_sef_link($link_yap)
 {
 	$link_yap = trim($link_yap);
 	$link_yap = html_entity_decode($link_yap, ENT_QUOTES, 'UTF-8');

@@ -8,9 +8,15 @@ if ( empty($_POST) ){
 
 $orderByType = isset($_POST['sirala']) && in_array($_POST['sirala'], ['ASC', 'DESC']) ? $_POST['sirala'] : 'DESC';
 $pageLimit = isset($_POST['sayfa_limit']) && $_POST['sayfa_limit'] > 0 && $_POST['sayfa_limit'] < 101 ? $_POST['sayfa_limit'] : 20;
-$pageSlug = isset($_POST['page_slug']) && ! empty($_POST['page_slug']) ? $_POST['page_slug'] : 'harika-sozler';
 
-$status = update_option('ahmeti_soz_setting', $orderByType.','.$pageLimit.','.$pageSlug);
+$currrentOption = $orderByType.','.$pageLimit;
+$getOption = get_option('ahmeti_soz_setting');
+
+if( $getOption !== $currrentOption ){
+	$status = update_option('ahmeti_soz_setting', $orderByType.','.$pageLimit);
+}else{
+	$status = true;
+}
 
 if ( $status ){
     echo '<p class="ahmeti_ok">Ayarlar başarıyla güncellendi.</p>';

@@ -42,13 +42,8 @@ if( count($items) > 0 ){
         ?>
     </table>
 
-    <?php            
-
-        sayfala(PHP_D_URL, $count, $page, AHMETI_SOZ_LIMIT, '');
+    <?php sayfala(PHP_D_URL, $count, $page, AHMETI_SOZ_LIMIT, '');
 
 }else{
-    // Söz yok ise uyarı mesajı ver.
-    ?>
-    <p class="ahmeti_hata">Hiç söz eklememişsiniz :(</p>
-    <?php
+    echo '<p class="ahmeti_hata">Hiç söz eklememişsiniz :(</p>';
 }

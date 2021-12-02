@@ -1,14 +1,15 @@
 <?php if(!defined('AHMETI_KONTROL')){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); } ?>
 <h2>Söz Listesi</h2>
 <?php
+$limit = 40;
 $count = (ahmeti_wp_db()->get_row(ahmeti_wp_db()->prepare('SELECT COUNT(quote_id) as count FROM '.AHMETI_WP_QUOTES_TABLE, [])))->count;
 $page = isset($_GET['is_page']) && (int)$_GET['is_page'] > 0 ? (int)$_GET['is_page'] : 1;
-$start = ($page - 1) * AHMETI_SOZ_LIMIT;
+$start = ($page - 1) * $limit;
 
 $items = ahmeti_wp_guzel_sozler_quotes(
     ['quote_id', 'author_name', 'quote', 'quote_desc'],
     ['quote_id', 'DESC'],
-    [$start, AHMETI_SOZ_LIMIT]
+    [$start, $limit]
 );
 
 if( count($items) > 0 ){
@@ -42,7 +43,7 @@ if( count($items) > 0 ){
         ?>
     </table>
 
-    <?php sayfala(PHP_D_URL, $count, $page, AHMETI_SOZ_LIMIT, '');
+    <?php ahmeti_wp_guzel_sozler_sayfala(PHP_D_URL, $count, $page, $limit, '');
 
 }else{
     echo '<p class="ahmeti_hata">Hiç söz eklememişsiniz :(</p>';

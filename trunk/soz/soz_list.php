@@ -1,10 +1,7 @@
 <?php if(!defined('AHMETI_KONTROL')){ echo 'Bu dosyaya erşiminiz engellendi.'; exit(); } ?>
 <h2>Söz Listesi</h2>
 <?php
-
-global $wpdb;
-
-$count = ($wpdb->get_row($wpdb->prepare('SELECT COUNT(quote_id) as count FROM '.AHMETI_WP_QUOTES_TABLE, [])))->count;
+$count = (ahmeti_wp_db()->get_row(ahmeti_wp_db()->prepare('SELECT COUNT(quote_id) as count FROM '.AHMETI_WP_QUOTES_TABLE, [])))->count;
 $page = isset($_GET['is_page']) && (int)$_GET['is_page'] > 0 ? (int)$_GET['is_page'] : 1;
 $start = ($page - 1) * AHMETI_SOZ_LIMIT;
 

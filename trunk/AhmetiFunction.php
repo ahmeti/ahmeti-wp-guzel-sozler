@@ -367,7 +367,11 @@ function DebugAhmetiGuzelSozler($data)
 	echo '</pre>';
 }
 
-
+function ahmeti_wp_db()
+{
+    global $wpdb;
+    return $wpdb;
+}
 
 function ahmeti_wp_guzel_sozler_quotes($columns=[], $orderBy=['quote_id', 'DESC'], $limit = [0, 20])
 {

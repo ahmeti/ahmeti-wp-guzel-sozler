@@ -26,6 +26,8 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+global $wpdb;
+
 define('AHMETI_KONTROL', true);
 define('AHMETI_WP_PREFIX', $wpdb->prefix);
 define('AHMETI_WP_AUTHORS_TABLE', $wpdb->prefix.'ahmeti_wp_author');
@@ -33,7 +35,8 @@ define('AHMETI_WP_QUOTES_TABLE', $wpdb->prefix.'ahmeti_wp_quote');
 define('PHP_D_URL', admin_url().'admin.php?page=ahmeti_wp_guzel_sozler/index.php');
 
 
-/* Ayarları Al */
+
+// Ayarları Al
 $ayarlar = explode(',', (string)get_option('ahmeti_soz_setting'));
 define('AHMETI_SIRALAMA', isset($ayarlar[0]) ? $ayarlar[0] : 'DESC'); // Sıralama ASC veya DESC
 define('AHMETI_SOZ_LIMIT', isset($ayarlar[1]) ? $ayarlar[1] : 20); // Gosterim adeti 5,10,15,20
@@ -41,11 +44,14 @@ define('AHMETI_SOZ_LIST_SLUG', isset($ayarlar[2]) ? $ayarlar[2] : 'harika-sozler
 
 
 require_once 'AhmetiFunction.php';
-require_once 'AhmetiFunctionGenel.php';
 
-if ( isset($_GET['activate']) && $_GET['activate'] == 'true' )
-{
-	add_action("activated_plugin", "ahmeti_soz_kurulum");
+if (
+	isset($_GET['action']) &&
+	isset($_GET['plugin']) &&
+    $_GET['action'] == 'activate' &&
+	$_GET['plugin'] == 'ahmeti-wp-guzel-sozler/index.php'
+){
+	add_action('activated_plugin', 'ahmeti_soz_kurulum');
 }
 
 // Admin Panel - Yonetim Paneli Olusturma
@@ -56,14 +62,11 @@ function ahmeti_index(){
     require_once 'header.php';
 
 	// $routes = [];
-
-    
-    /*      İ Ş L E M L E R     */
     
     $islem=@$_GET['islem'];
     
     
-    /* Söz */
+    // Söz
     if ($islem=='soz_list'){
         require_once 'soz/soz_list.php';
         

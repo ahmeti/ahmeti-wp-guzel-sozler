@@ -11,15 +11,13 @@ $quote = isset($_POST['soz']) ? $_POST['soz'] : '';
 $quoteDesc = isset($_POST['aciklama']) ? $_POST['aciklama'] : '';
 $authorId = isset($_POST['author_id']) ? $_POST['author_id'] : '';
 
-
 if( empty($id) || empty($quote) || empty($authorId)){
 
     echo '<p class="ahmeti_hata">Boş alan bırakmayınız.</p>';
 
 }else{
 
-    global $wpdb;
-    $status = $wpdb->update(AHMETI_WP_QUOTES_TABLE, [
+    $status = ahmeti_wp_db()->update(AHMETI_WP_QUOTES_TABLE, [
         'quote_author_id' => $authorId,
         'quote' => $quote,
         'quote_desc' => $quoteDesc,

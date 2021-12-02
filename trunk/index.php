@@ -35,28 +35,25 @@ define('AHMETI_WP_AUTHORS_TABLE', $wpdb->prefix.'ahmeti_wp_author');
 define('AHMETI_WP_QUOTES_TABLE', $wpdb->prefix.'ahmeti_wp_quote');
 define('PHP_D_URL', admin_url().'admin.php?page=ahmeti_wp_guzel_sozler/index.php');
 
-
-
-// Ayarları Al
-$ayarlar = explode(',', (string)get_option('ahmeti_soz_setting'));
-define('AHMETI_SIRALAMA', isset($ayarlar[0]) ? $ayarlar[0] : 'DESC'); // Sıralama ASC veya DESC
-define('AHMETI_SOZ_LIMIT', isset($ayarlar[1]) ? $ayarlar[1] : 20); // Gosterim adeti 5,10,15,20
-define('AHMETI_SOZ_LIST_SLUG', isset($ayarlar[2]) ? $ayarlar[2] : 'harika-sozler'); // Söz Listesini göstermek için "Page Slug" değeri
-
-
 require_once 'AhmetiFunction.php';
 
-if (
-	isset($_GET['action']) &&
-	isset($_GET['plugin']) &&
-    $_GET['action'] == 'activate' &&
-	$_GET['plugin'] == 'ahmeti-wp-guzel-sozler/index.php'
-){
-	add_action('activated_plugin', 'ahmeti_soz_kurulum');
-}
+if( is_admin() ){
 
-// Admin Panel - Yonetim Paneli Olusturma
-add_action('admin_menu', 'ahmeti_admin_menu');
+	if (
+		isset($_GET['action']) &&
+		isset($_GET['plugin']) &&
+		$_GET['action'] == 'activate' &&
+		$_GET['plugin'] == 'ahmeti-wp-guzel-sozler/index.php'
+	){
+		add_action('activated_plugin', 'ahmeti_wp_guzel_sozler_install');
+	}
+
+	add_action('admin_menu', 'ahmeti_wp_guzel_sozler_admin_menu');
+
+}else{
+
+	add_shortcode('ahmeti_wp_guzel_sozler', 'ahmeti_wp_guzel_sozler_shortcode');
+}
 
 function ahmeti_index(){
 

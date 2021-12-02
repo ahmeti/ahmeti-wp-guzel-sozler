@@ -272,8 +272,6 @@ function ahmeti_wp_guzel_sozler_footer()
 
 function ahmeti_wp_guzel_sozler_shortcode()
 {
-	ahmeti_wp_guzel_sozler_random();
-
 	$urlSegments = array_values(array_filter(explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))));
 
 	if( count($urlSegments) == 2 && isset($urlSegments[0]) && isset($urlSegments[1]) ){
@@ -358,17 +356,30 @@ function ahmeti_wp_guzel_sozler_shortcode_quotes($urlSegment, $authorSlug)
 	}
 }
 
-function ahmeti_wp_guzel_sozler_random()
+function ahmeti_wp_guzel_sozler_random($print = false)
 {
 	global $wpdb;
     $columns = 'quote_id, author_id, author_name, author_slug, quote, quote_desc';
 	$quote = $wpdb->get_row($wpdb->prepare('SELECT '.$columns.' FROM '.AHMETI_WP_QUOTES_TABLE.' quote LEFT JOIN '.AHMETI_WP_AUTHORS_TABLE.' as author ON author.author_id = quote.quote_author_id ORDER BY RAND()', ['']));
-    return (object)[
-        'quote_id' => isset($quote->quote_id) ? $quote->quote_id : null,
-        'author_id' => isset($quote->author_id) ? $quote->author_id : null,
-        'author_name' => isset($quote->author_name) ? $quote->author_name : null,
-        'author_slug' => isset($quote->author_slug) ? $quote->author_slug : null,
-        'quote' => isset($quote->quote) ? $quote->quote : null,
-        'quote_desc' => isset($quote->quote_desc) ? $quote->quote_desc : null,
-    ];
+	$quote = (object)[
+		'quote_id' => isset($quote->quote_id) ? $quote->quote_id : null,
+		'author_id' => isset($quote->author_id) ? $quote->author_id : null,
+		'author_name' => isset($quote->author_name) ? $quote->author_name : null,
+		'author_slug' => isset($quote->author_slug) ? $quote->author_slug : null,
+		'quote' => isset($quote->quote) ? $quote->quote : null,
+		'quote_desc' => isset($quote->quote_desc) ? $quote->quote_desc : null,
+	];
+
+    if( $print === false ){
+	    return $quote;
+    }
+
+	echo
+        '<div class="gunun_sozu" style="padding: 45px 0 15px 235px;width: 490px;font-size: 15px;letter-spacing: 0.5px;display: block;line-height: 2em; font:oblique 15px/2em Georgia,serif;">'.
+	        '<span style="font-size: 40px;font-weight: bold;float:left;">&ldquo;</span>'.
+	        '<p id="soz_soz" style="text-indent:20px;line-height: 2em;margin-top:10px">'.$quote->quote.
+	            (empty($quote->quote_desc) ? '' : '<span id="soz_aciklama" style="display:block;font-size:11px;">'.$quote->quote_desc.'</span>').
+            '</p>'.
+            '<p id="soz_sahibi" style="margin-top: 5px;text-align: right;"><a style="color: #B96400;" href="#">'.$quote->author_name.'</a></p>'.
+        '</div>';
 }

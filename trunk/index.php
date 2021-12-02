@@ -1,11 +1,11 @@
 <?php
 /*
     Plugin Name: Ahmeti Wp Güzel Sözler
-    Plugin URI: http://ahmeti.net/
+    Plugin URI: https://ahmetimamoglu.com.tr/ahmeti-wp-guzel-sozler-1-0
     Description: Harika sözleri arşivleyebileceğiniz ve istediğiniz sayfalarda paylaşabileceğiniz bir eklenti...
     Author: Ahmet İmamoğlu
-    Version: 3.2
-    Author URI: http://ahmeti.net/
+    Version: 4.0
+    Author URI: http://ahmetimamoglu.com.tr
 */
 
 /*
@@ -28,6 +28,7 @@
 
 global $wpdb;
 
+define('AHMETI_WP_QUOTES_VERSION', '4.0');
 define('AHMETI_KONTROL', true);
 define('AHMETI_WP_PREFIX', $wpdb->prefix);
 define('AHMETI_WP_AUTHORS_TABLE', $wpdb->prefix.'ahmeti_wp_author');
@@ -58,88 +59,44 @@ if (
 add_action('admin_menu', 'ahmeti_admin_menu');
 
 function ahmeti_index(){
-   
-    require_once 'header.php';
 
-	// $routes = [];
+	$route = isset($_GET['islem']) ? (string)$_GET['islem'] : '';
+
+	$routes = [
+		'soz_list' => 'soz/soz_list.php',
+		'yeni_ekle' => 'soz/new_soz_form.php',
+		'yeni_ekle_ok' => 'soz/new_soz_form_add.php',
+		'guncelle' => 'soz/update_soz_form.php',
+		'guncelle_ok' => 'soz/update_soz_form_add.php',
+		'sil' => 'soz/delete_soz.php',
+
+		'author_list' => 'author/author_list.php',
+		'yeni_author_ekle' => 'author/new_author_form.php',
+		'yeni_author_ekle_ok' => 'author/new_author_form_add.php',
+		'author_guncelle' => 'author/update_author_form.php',
+		'update_author_form_add' => 'author/update_author_form_add.php',
+		'delete_author' => 'author/delete_author.php',
+
+		'ayarlar' => 'settings/settings.php',
+		'ayar_kaydet' => 'settings/settings_save.php',
+
+		// 'export_page' => 'export/export_page.php',
+		// 'export_kaydet' => 'export/export_save.php',
+
+		// 'import_page' => 'import/import_page.php',
+		// 'import_kaydet' => 'import/import_save.php',
+
+		'search' => 'search/SearchPost.php',
+	];
+
+
+	echo ahmeti_wp_guzel_sozler_header();
+
+	if( array_key_exists($route, $routes) ){
+		require_once $routes[$route];
+	}else{
+		require_once 'soz/soz_list.php';
+	}
     
-    $islem=@$_GET['islem'];
-    
-    
-    // Söz
-    if ($islem=='soz_list'){
-        require_once 'soz/soz_list.php';
-        
-    }elseif ($islem=='yeni_ekle'){
-        require_once 'soz/new_soz_form.php';
-        
-    }elseif ($islem=='yeni_ekle_ok'){
-        require_once 'soz/new_soz_form_add.php';
-        
-    }elseif ($islem=='guncelle'){
-        require_once 'soz/update_soz_form.php';
-        
-    }elseif ($islem=='guncelle_ok'){
-        require_once 'soz/update_soz_form_add.php';
-        
-    }elseif ($islem=='sil'){
-        require_once 'soz/delete_soz.php';        
-
-        
-    /* Yazar */
-    }elseif ($islem == 'author_list'){
-        require_once 'author/author_list.php';
-        
-    }elseif ($islem=='yeni_author_ekle'){
-        require_once 'author/new_author_form.php';
-            
-    }elseif ($islem=='yeni_author_ekle_ok'){
-        require_once 'author/new_author_form_add.php';
-
-    }elseif ($islem=='author_guncelle'){
-        require_once 'author/update_author_form.php';
-        
-    }elseif ($islem=='update_author_form_add'){
-        require_once 'author/update_author_form_add.php';
-        
-    }elseif ($islem=='delete_author'){
-        require_once 'author/delete_author.php';
-
-        
-    /* Ayarlar */
-    }elseif($islem=='ayarlar'){
-        require_once 'settings/settings.php';
-        
-    }elseif($islem=='ayar_kaydet'){
-        require_once 'settings/settings_save.php';
-        
-
-    /* Export */
-    }elseif($islem=='export_page'){
-        require_once 'export/export_page.php';
-        
-    }elseif($islem=='export_kaydet'){
-        require_once 'export/export_save.php';
-        
-        
-    /* Import */
-    }elseif($islem=='import_page'){
-        require_once 'import/import_page.php';
-        
-    }elseif($islem=='import_kaydet'){
-        require_once 'import/import_save.php';
-        
-     
-    /* Arama */
-    }elseif($islem=='search'){
-        require_once 'search/SearchPost.php';
-        
-        
-    /* Anasyafa */
-    }else{
-        require_once 'soz/soz_list.php';
-    }
-
-    
-    require_once 'footer.php';
+    echo ahmeti_wp_guzel_sozler_footer();
 }

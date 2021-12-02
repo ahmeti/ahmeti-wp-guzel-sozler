@@ -280,19 +280,6 @@ function ahmeti_wp_guzel_sozler_author_soz_list($sozSahibiSef){
     
 }
 
-function ahmeti_wp_guzel_sozler_quotes($columns=[], $orderBy=['quote_id', 'DESC'], $limit = [0, 20])
-{
-	$columns = empty($columns) ? '*' : implode(',', $columns);
-
-	global $wpdb;
-	return $wpdb->get_results($wpdb->prepare(
-        'SELECT '.$columns.' FROM '.AHMETI_WP_QUOTES_TABLE.' as quote '.
-        'LEFT JOIN '.AHMETI_WP_AUTHORS_TABLE.' as author ON author.author_id = quote.quote_author_id '.
-        'ORDER BY '.$orderBy[0].' '.$orderBy[1].' '.
-        'LIMIT '.$limit[0].', '.$limit[1]
-    , ['']));
-}
-
 function Sayfala($site_url,$top_sayfa,$page,$limit,$page_url)
 {
 	// Sayfalama Şeridimiz
@@ -378,4 +365,80 @@ function DebugAhmetiGuzelSozler($data)
 	echo '<pre font-size="10">';
 	echo htmlentities($out,ENT_QUOTES,'UTF-8');
 	echo '</pre>';
+}
+
+
+
+function ahmeti_wp_guzel_sozler_quotes($columns=[], $orderBy=['quote_id', 'DESC'], $limit = [0, 20])
+{
+	$columns = empty($columns) ? '*' : implode(',', $columns);
+
+	global $wpdb;
+	return $wpdb->get_results($wpdb->prepare(
+		'SELECT '.$columns.' FROM '.AHMETI_WP_QUOTES_TABLE.' as quote '.
+		'LEFT JOIN '.AHMETI_WP_AUTHORS_TABLE.' as author ON author.author_id = quote.quote_author_id '.
+		'ORDER BY '.$orderBy[0].' '.$orderBy[1].' '.
+		'LIMIT '.$limit[0].', '.$limit[1]
+		, ['']));
+}
+
+function ahmeti_wp_guzel_sozler_authors($columns=[], $orderBy=['quote_id', 'DESC'], $limit = [0, 20])
+{
+	$columns = empty($columns) ? '*' : implode(',', $columns);
+
+	global $wpdb;
+	return $wpdb->get_results($wpdb->prepare(
+		'SELECT '.$columns.' FROM '.AHMETI_WP_AUTHORS_TABLE.' as author '.
+		'ORDER BY '.$orderBy[0].' '.$orderBy[1].' '.
+		'LIMIT '.$limit[0].', '.$limit[1]
+		, ['']));
+}
+
+
+function ahmeti_wp_guzel_sozler_header()
+{
+    $logo = plugins_url('ahmeti-wp-guzel-sozler/images/icon.png');
+
+	return
+    '<div id="ahmeti_wrap" style="padding:10px">'.
+
+        '<div style="overflow: hidden;margin-bottom: 10px">'.
+            '<div style="float: left">'.
+                '<h1 style="font:oblique 30px/30px Georgia,serif; color:grey;background-image: url(\''.$logo.'\');background-repeat: no-repeat;padding: 20px 10px 10px 37px;background-position: 0 0;">Ahmeti WP Güzel Sözler'.
+                    '<sup style="font-size: 12px">'.AHMETI_WP_QUOTES_VERSION.'</sup>'.
+                '</h1>'.
+            '</div>'.
+
+            '<div style="float: left">'.
+                '<form action="'.PHP_D_URL.'&islem=search" method="post" style="margin-left: 58px;margin-top: 43px;">'.
+                    '<input type="text" name="AhmetiSearch" size="40" placeholder="Yazar, söz, açıklama arayabalirsiniz."/>'.
+                    '<input type="submit" value="&nbsp;&nbsp;ARA&nbsp;&nbsp;" /><br/>'.
+                '</form>'.
+            '</div>'.
+        '</div>'.
+
+        '<a style="margin-right:15px;" class="button" href="'.PHP_D_URL.'">Söz Listesi</a>'.
+        '<a style="margin-right:15px;" class="button" href="'.PHP_D_URL.'&islem=yeni_ekle">Yeni Söz Ekle</a>'.
+
+        '<a style="margin-right:15px;" class="button" href="'.PHP_D_URL.'&islem=author_list">Yazar Listesi</a>'.
+        '<a style="margin-right:15px;" class="button" href="'.PHP_D_URL.'&islem=yeni_author_ekle">Yeni Yazar Ekle</a>'.
+
+        '<a style="margin-right:15px;" class="button" href="'.PHP_D_URL.'&islem=ayarlar">Ayarlar</a>'.
+
+        /* '<a style="margin-right:15px;" class="button" href="'.PHP_D_URL.'&islem=export_page">Sözleri Al</a>'.
+         '<a style="margin-right:15px;" class="button" href="'.PHP_D_URL.'&islem=import_page">Sözleri Yükle</a>'.*/
+
+        '<div style="margin-top: 15px;clear: both;padding:5px;"></div>';
+}
+
+function ahmeti_wp_guzel_sozler_footer()
+{
+	return
+		'<br/><br/>'.
+		'<p style="margin:30px 0 0 0 ;display:inline;font:oblique 11px/1em Georgia,serif">'.
+            'Geliştirici: <a target="_blank" href="https://ahmetimamoglu.com.tr">Ahmet İmamoğlu</a> | '.
+            '<a target="_blank" href="https://ahmetimamoglu.com.tr/ahmeti-wp-guzel-sozler-1-0">Eklenti Sayfası</a> | '.
+            '<a target="_blank" href="https://github.com/ahmeti/ahmeti-wp-guzel-sozler">Github</a>'.
+		'</p>'.
+    '</div>';
 }

@@ -6,17 +6,24 @@ if ( empty($_POST) ){
 	return '';
 }
 
-$orderByType = isset($_POST['sirala']) && in_array($_POST['sirala'], ['ASC', 'DESC']) ? $_POST['sirala'] : 'DESC';
-$pageLimit = isset($_POST['sayfa_limit']) && $_POST['sayfa_limit'] > 0 && $_POST['sayfa_limit'] < 101 ? $_POST['sayfa_limit'] : 20;
+$authorPageName = isset($_POST['author_page_name']) && strlen(trim($_POST['author_page_name'])) > 0 ? $_POST['author_page_name'] : 'harika-sozler';
 
-$currrentOption = $orderByType.','.$pageLimit;
-$getOption = get_option('ahmeti_soz_setting');
+$currrentOptions = [
+	'author_page_name' => $authorPageName,
+];
 
-if( $getOption !== $currrentOption ){
-	$status = update_option('ahmeti_soz_setting', $orderByType.','.$pageLimit);
+
+$getOptions = unserialize(get_option('ahmeti_wp_guzel_sozler', ''));
+if ( empty($getOptions) ){
+	$status = add_option('ahmeti_wp_guzel_sozler', serialize($currrentOptions), '', true);
+
+}elseif( $getOptions !== serialize($currrentOptions) ){
+	$status = update_option('ahmeti_wp_guzel_sozler', serialize($currrentOptions), true);
+
 }else{
 	$status = true;
 }
+
 
 if ( $status ){
     echo '<p class="ahmeti_ok">Ayarlar başarıyla güncellendi.</p>';

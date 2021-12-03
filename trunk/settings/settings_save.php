@@ -12,8 +12,8 @@ $currrentOptions = [
 	'author_page_name' => $authorPageName,
 ];
 
+$getOptions = get_option('ahmeti_wp_guzel_sozler');
 
-$getOptions = unserialize(get_option('ahmeti_wp_guzel_sozler', ''));
 if ( empty($getOptions) ){
 	$status = add_option('ahmeti_wp_guzel_sozler', serialize($currrentOptions), '', true);
 

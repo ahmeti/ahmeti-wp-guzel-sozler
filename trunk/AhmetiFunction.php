@@ -89,32 +89,6 @@ function ahmeti_wp_guzel_sozler_admin_menu()
     add_menu_page('Ahmeti Wp Güzel Sözler', 'Söz Arşivi', 'edit_pages', 'ahmeti_wp_guzel_sozler/index.php', 'ahmeti_index', plugins_url('ahmeti-wp-guzel-sozler/images/ahmeti-icon.png'), 6);
 }
 
-function ahmeti_wp_guzel_sozler()
-{
-    $ahmetiPre=AHMETI_WP_PREFIX;
-    $row=mysql_fetch_assoc(mysql_query("SELECT soz,aciklama,wp_soz_author_name,wp_soz_author_slug FROM {$ahmetiPre}soz_view ORDER BY RAND() LIMIT 0,1"));
-
-    $AhmetiSoz=htmlspecialchars(strip_tags($row['soz']), ENT_QUOTES, 'UTF-8');
-    $AhmetiYazar=htmlspecialchars(strip_tags($row['wp_soz_author_name']), ENT_QUOTES, 'UTF-8');
-    $AhmetiAciklama=htmlspecialchars(strip_tags($row['aciklama']), ENT_QUOTES, 'UTF-8');
-    
-    $soz='<div class="gunun_sozu" style="padding: 45px 0 15px 235px;width: 490px;font-size: 15px;letter-spacing: 0.5px;display: block;line-height: 2em; font:oblique 15px/2em Georgia,serif;">';
-    $soz .='<span style="font-size: 40px;font-weight: bold;float:left;">&ldquo;</span>';
-    $soz .='<p id="soz_soz" style="text-indent:20px;line-height: 2em;margin-top:10px">'.$AhmetiSoz;
-
-    if ($row['aciklama']==''){
-    }else{
-        $soz .='<span id="soz_aciklama" style="display:block;font-size:11px;">'.$AhmetiAciklama.'</span>';
-    }
-
-    $soz .='</p>';
-    $soz .='<p id="soz_sahibi" style="margin-top: 5px;text-align: right;"><a style="color: #B96400;"href="#">'.$AhmetiYazar.'</a></p>';
-    $soz.='</div>';
-    return $soz;
-}
-
-
-
 function ahmeti_wp_db()
 {
     global $wpdb;
@@ -292,13 +266,14 @@ function ahmeti_wp_guzel_sozler_shortcode()
 {
 	$urlSegments = array_values(array_filter(explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))));
 
-	if( count($urlSegments) == 2 && isset($urlSegments[0]) && isset($urlSegments[1]) ){
+	$authorSlug = ! empty($_GET['author']) ? $_GET['author'] : null;
+
+	if( $authorSlug ){
 		// Quotes
-		return ahmeti_wp_guzel_sozler_shortcode_quotes($urlSegments[0], $urlSegments[1]);
-	}elseif( count($urlSegments) == 1 && isset($urlSegments[0]) ){
-		// Authors
-		return ahmeti_wp_guzel_sozler_shortcode_authors($urlSegments[0]);
+		return ahmeti_wp_guzel_sozler_shortcode_quotes($urlSegments[0], $authorSlug);
 	}
+		// Authors
+    return ahmeti_wp_guzel_sozler_shortcode_authors($urlSegments[0]);
 }
 
 function ahmeti_wp_guzel_sozler_shortcode_authors($urlSegment)
@@ -306,7 +281,7 @@ function ahmeti_wp_guzel_sozler_shortcode_authors($urlSegment)
 	$authors = ahmeti_wp_guzel_sozler_authors(['author_id', 'author_name', 'author_slug'], ['author_name', 'ASC'], [0, 99999]);
 	echo '<ul id="ahmeti_wp_author_list">';
 	foreach($authors as $author){
-		echo '<li><a href="'.home_url().'/'.$urlSegment.'/'.$author->author_slug.'">'.$author->author_name.'</a></li>';
+		echo '<li><a href="'.home_url().'/'.$urlSegment.'?author='.$author->author_slug.'">'.$author->author_name.'</a></li>';
 	}
 	echo '</ul>';
 }
@@ -320,8 +295,9 @@ function ahmeti_wp_guzel_sozler_shortcode_quotes($urlSegment, $authorSlug)
 		echo 'Bu kişi hakkında söz eklenmemiş.';
 	}else{
 		?>
-        <a style="float: right;font-weight: bold;margin-top: 7px;" href="<?php echo home_url().'/'.$urlSegment; ?>">&lt; Harika Sözler</a>
-        <h1 class="entry-title"><a href="<?php  echo home_url().'/'.$urlSegment.'/'.$authorSlug ?>" rel="bookmark"><?php echo $author->author_name; ?> Sözleri</a></h1>
+        <h1 class="entry-title">
+            <a href="<?php  echo home_url().'/'.$urlSegment.'?author='.$authorSlug ?>" rel="bookmark"><?php echo $author->author_name; ?> Sözleri</a>
+        </h1>
 
 		<?php
 
@@ -371,6 +347,8 @@ function ahmeti_wp_guzel_sozler_shortcode_quotes($urlSegment, $authorSlug)
 			echo'</li>';
 		}
 		echo '</ul>';
+
+        echo '<p><a style="font-weight: bold;margin-top: 7px;" href="'.home_url().'/'.$urlSegment.'">&lt; Harika Sözler</a></p>';
 	}
 }
 

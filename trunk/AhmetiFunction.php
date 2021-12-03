@@ -68,9 +68,12 @@ function ahmeti_wp_guzel_sozler_install()
     }
 
     // Ayar Meta Var mı?
-    /*if ( get_option('ahmeti_soz_setting') == false ){
-        add_option('ahmeti_soz_setting', 'ASC,10');
-    }*/
+    if ( get_option('ahmeti_wp_guzel_sozler') == false ){
+        $options = [
+            'author_page_name' => 'harika-sozler',
+        ];
+        add_option('ahmeti_wp_guzel_sozler', serialize($options), '', true);
+    }
 }
 
 function ahmeti_wp_guzel_sozler_admin_head()
@@ -267,6 +270,21 @@ function ahmeti_wp_guzel_sozler_footer()
     '</div>';
 }
 
+function ahmeti_wp_guzel_sozler_get_option($key)
+{
+	$options = get_option('ahmeti_wp_guzel_sozler');
+
+	if( empty($options) ){
+        return null;
+    }
+
+    $options = unserialize($options);
+    if( ! array_key_exists($key, $options) ){
+	    return null;
+    }
+
+	return $options[$key];
+}
 
 // Front Functions
 

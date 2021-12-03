@@ -21,7 +21,7 @@ Sadece sözü, sadece yazarı veya sadece açıklamayı gösterebilirsiniz.</p>
     <form id="form_ayarlar" action="<?php echo PHP_D_URL; ?>&islem=ayar_kaydet" method="post">
 
         <h3 style="margin-bottom: 1px;">Sayfa Benzersiz Adı</h3>
-        <input type="text" name="page_slug" value="<?php echo ahmeti_wp_guzel_sozler_get_option('author_page_name'); ?>" size="60" />
+        <input type="text" name="author_page_name" value="<?php echo ahmeti_wp_guzel_sozler_get_option('author_page_name'); ?>" size="60" />
         <br/><br/>
 
         <a style="margin-right:15px;" class="button" href="<?php echo admin_url(); ?>plugin-editor.php?file=ahmeti-wp-guzel-sozler%2Fcss%2Fstyle.css&plugin=ahmeti-wp-guzel-sozler%2Fstyle.css">CSS Sitili Düzenle</a>

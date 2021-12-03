@@ -39,6 +39,7 @@ require_once 'AhmetiFunction.php';
 
 if( is_admin() ){
 
+	// ADMIN
 	if (
 		isset($_GET['action']) &&
 		isset($_GET['plugin']) &&
@@ -52,6 +53,7 @@ if( is_admin() ){
 
 }else{
 
+	// USER
 	add_shortcode('ahmeti_wp_guzel_sozler', 'ahmeti_wp_guzel_sozler_shortcode');
 }
 
